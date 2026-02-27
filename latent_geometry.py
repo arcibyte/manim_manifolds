@@ -113,48 +113,90 @@ class LinearVsGeodesic(ThreeDScene):
         
         self.wait(2)
         
-class MetricTensor(Scene):
+from manim import *
+import numpy as np
 
+class MetricTensorEvolution(Scene):
     def construct(self):
-        title = Text("Tensor Métrico en el Espacio Latente", font_size=40)
-        title.to_edge(UP)
-        self.play(Write(title))
+        title = Text("Geometría del Tensor Métrico", font_size=44, weight=BOLD)
+        title.to_edge(UP, buff=0.5)
         
-        grid = NumberPlane(
-            x_range=[-4, 4, 1], y_range=[-3, 3, 1],
-            background_line_style={"stroke_color": BLUE_D, "stroke_width": 1, "stroke_opacity": 0.4}
-        )
-        self.play(Create(grid))
-        
-        def density_func(point):
+        def metric_field(point):
             x, y = point[0], point[1]
-            return np.exp(-((x+1.5)**2 + (y+1)**2)/0.8) + \
-                   np.exp(-((x-1.5)**2 + (y-1)**2)/0.8) + \
-                   np.exp(-((x)**2 + (y+1.5)**2)/1.2)
+            dist = np.sqrt(x**2 + y**2)
+            return 1 / (1 + 0.5 * dist**2)
+
+        grid = NumberPlane(
+            x_range=[-7, 7, 1],
+            y_range=[-4, 4, 1],
+            background_line_style={
+                "stroke_color": BLUE_E,
+                "stroke_width": 1,
+                "stroke_opacity": 0.2
+            }
+        )
+
+        heatmap = VGroup()
+        res = 0.25 
+        for x in np.arange(-5, 5 + res, res):
+            for y in np.arange(-3, 3 + res, res):
+                m_val = metric_field(np.array([x, y, 0]))
+                color = interpolate_color(DARK_BLUE, YELLOW, m_val)
+                rect = Rectangle(
+                    width=res, height=res, 
+                    fill_color=color, fill_opacity=0.3, 
+                    stroke_width=0
+                ).move_to([x, y, 0])
+                heatmap.add(rect)
+
+        self.play(Write(title), Create(grid))
+        self.play(FadeIn(heatmap, run_time=2))
+
+        tensors = VGroup()
+        for x in np.linspace(-5, 5, 11):
+            for y in np.linspace(-3, 3, 7):
+                pos = np.array([x, y, 0])
+                m_val = metric_field(pos)
+                ellipse = Ellipse(
+                    width=0.8 * (1 - m_val + 0.2),
+                    height=0.5 * (1 - m_val + 0.2),
+                    stroke_width=2,
+                    color=RED_A if m_val < 0.5 else YELLOW_A
+                ).move_to(pos)
+                if np.linalg.norm(pos) > 0.1: 
+                    ellipse.rotate(np.arctan2(y, x))
+                tensors.add(ellipse)
+
+        self.play(LaggedStartMap(Create, tensors, lag_ratio=0.05), run_time=3)
+        self.wait()
+
+        scanner_dot = Dot(color=WHITE).move_to([-4, 2, 0])
+        local_tensor = always_redraw(lambda: 
+            Ellipse(
+                width=1.2 * (1 - metric_field(scanner_dot.get_center())),
+                height=0.7 * (1 - metric_field(scanner_dot.get_center())),
+                color=PURE_RED,
+                stroke_width=5
+            ).move_to(scanner_dot.get_center())
+        )
         
-        squares = VGroup()
-        for x in np.linspace(-3.5, 3.5, 20):
-            for y in np.linspace(-2.5, 2.5, 15):
-                d = density_func(np.array([x, y, 0]))
-                if d > 0.1:
-                    sq = Rectangle(width=0.4, height=0.4, fill_opacity=min(d, 0.6), 
-                                   fill_color=YELLOW, stroke_width=0).move_to([x, y, 0])
-                    squares.add(sq)
+        label_g = always_redraw(lambda:
+            MathTex(r"g(z)_{local}", color=PURE_RED, font_size=24)
+            .next_to(local_tensor, UP, buff=0.2)
+        )
+
+        self.play(FadeIn(scanner_dot), Create(local_tensor), Write(label_g))
         
-        self.play(FadeIn(squares), run_time=2)
+        path = ArcBetweenPoints(np.array([-4, 2, 0]), np.array([4, -2, 0]), angle=-TAU/4)
+        self.play(MoveAlongPath(scanner_dot, path), run_time=4, rate_func=linear)
+        self.wait()
+
+        formula = MathTex(
+            r"ds^2 = \sum_{i,j} g_{ij} dz^i dz^j",
+            font_size=40
+        ).to_edge(DOWN, buff=0.5)
         
-        points = [np.array([-1.5, -1, 0]), np.array([1.5, 1, 0]), np.array([0, -1.5, 0])]
-        ellipses = VGroup()
+        bg_rect = SurroundingRectangle(formula, color=BLUE_A, fill_color=BLACK, fill_opacity=0.8)
         
-        for p in points:
-            d = density_func(p)
-            scale = 0.5 / (d + 0.2)
-            el = Ellipse(width=scale, height=scale*0.6, color=RED, stroke_width=3).move_to(p)
-            vec = Arrow(p, p + np.array([0.4, 0.2, 0]), color=GREEN, buff=0, stroke_width=3)
-            ellipses.add(VGroup(el, vec))
-            
-        self.play(Create(ellipses), run_time=2)
-        
-        formula = MathTex(r"g(z) = J(z)^T J(z)", font_size=42).to_corner(DR)
-        self.play(Write(formula))
-        self.wait(3)
+        self.play(Create(bg_rect), Write(formula))
+        self.wait(2)
