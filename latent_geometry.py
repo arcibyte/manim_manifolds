@@ -98,8 +98,8 @@ class LinearVsGeodesic(ThreeDScene):
         self.wait()
         
         deviation_text = Text(
-            "La línea recta sale del manifold,\nla geodésica permanece en él",
-            font_size=26,
+            "La línea recta sale del manifold, la geodésica permanece en él",
+            font_size=22,
             color=WHITE,
             line_spacing=1.5
         )
@@ -113,3 +113,48 @@ class LinearVsGeodesic(ThreeDScene):
         
         self.wait(2)
         
+class MetricTensor(Scene):
+
+    def construct(self):
+        title = Text("Tensor Métrico en el Espacio Latente", font_size=40)
+        title.to_edge(UP)
+        self.play(Write(title))
+        
+        grid = NumberPlane(
+            x_range=[-4, 4, 1], y_range=[-3, 3, 1],
+            background_line_style={"stroke_color": BLUE_D, "stroke_width": 1, "stroke_opacity": 0.4}
+        )
+        self.play(Create(grid))
+        
+        def density_func(point):
+            x, y = point[0], point[1]
+            return np.exp(-((x+1.5)**2 + (y+1)**2)/0.8) + \
+                   np.exp(-((x-1.5)**2 + (y-1)**2)/0.8) + \
+                   np.exp(-((x)**2 + (y+1.5)**2)/1.2)
+        
+        squares = VGroup()
+        for x in np.linspace(-3.5, 3.5, 20):
+            for y in np.linspace(-2.5, 2.5, 15):
+                d = density_func(np.array([x, y, 0]))
+                if d > 0.1:
+                    sq = Rectangle(width=0.4, height=0.4, fill_opacity=min(d, 0.6), 
+                                   fill_color=YELLOW, stroke_width=0).move_to([x, y, 0])
+                    squares.add(sq)
+        
+        self.play(FadeIn(squares), run_time=2)
+        
+        points = [np.array([-1.5, -1, 0]), np.array([1.5, 1, 0]), np.array([0, -1.5, 0])]
+        ellipses = VGroup()
+        
+        for p in points:
+            d = density_func(p)
+            scale = 0.5 / (d + 0.2)
+            el = Ellipse(width=scale, height=scale*0.6, color=RED, stroke_width=3).move_to(p)
+            vec = Arrow(p, p + np.array([0.4, 0.2, 0]), color=GREEN, buff=0, stroke_width=3)
+            ellipses.add(VGroup(el, vec))
+            
+        self.play(Create(ellipses), run_time=2)
+        
+        formula = MathTex(r"g(z) = J(z)^T J(z)", font_size=42).to_corner(DR)
+        self.play(Write(formula))
+        self.wait(3)
