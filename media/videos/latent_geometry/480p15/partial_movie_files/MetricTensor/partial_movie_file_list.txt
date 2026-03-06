@@ -1,7 +1,0 @@
-# This file is used internally by FFMPEG.
-file 'file:/home/arcibyte/manim_manifolds/media/videos/latent_geometry/480p15/partial_movie_files/MetricTensor/1584795214_1504689495_223132457.mp4'
-file 'file:/home/arcibyte/manim_manifolds/media/videos/latent_geometry/480p15/partial_movie_files/MetricTensor/4072820271_3411323655_1370774179.mp4'
-file 'file:/home/arcibyte/manim_manifolds/media/videos/latent_geometry/480p15/partial_movie_files/MetricTensor/4072820271_48041048_3736630298.mp4'
-file 'file:/home/arcibyte/manim_manifolds/media/videos/latent_geometry/480p15/partial_movie_files/MetricTensor/4072820271_329682343_3699706690.mp4'
-file 'file:/home/arcibyte/manim_manifolds/media/videos/latent_geometry/480p15/partial_movie_files/MetricTensor/4072820271_1897103286_1529496554.mp4'
-file 'file:/home/arcibyte/manim_manifolds/media/videos/latent_geometry/480p15/partial_movie_files/MetricTensor/4072820271_4277570474_4201742117.mp4'
