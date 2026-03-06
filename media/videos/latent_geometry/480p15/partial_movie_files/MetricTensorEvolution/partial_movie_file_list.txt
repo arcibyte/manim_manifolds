@@ -1,0 +1,11 @@
+# This file is used internally by FFMPEG.
+file 'file:/home/arcibyte/manim_manifolds/media/videos/latent_geometry/480p15/partial_movie_files/MetricTensorEvolution/1584795214_3669861249_223132457.mp4'
+file 'file:/home/arcibyte/manim_manifolds/media/videos/latent_geometry/480p15/partial_movie_files/MetricTensorEvolution/4072820271_2759485240_4235777123.mp4'
+file 'file:/home/arcibyte/manim_manifolds/media/videos/latent_geometry/480p15/partial_movie_files/MetricTensorEvolution/4072820271_3150448736_1766684154.mp4'
+file 'file:/home/arcibyte/manim_manifolds/media/videos/latent_geometry/480p15/partial_movie_files/MetricTensorEvolution/4072820271_2574473371_1592117194.mp4'
+file 'file:/home/arcibyte/manim_manifolds/media/videos/latent_geometry/480p15/partial_movie_files/MetricTensorEvolution/4072820271_2583865610_1889592584.mp4'
+file 'file:/home/arcibyte/manim_manifolds/media/videos/latent_geometry/480p15/partial_movie_files/MetricTensorEvolution/4072820271_340098427_2951428236.mp4'
+file 'file:/home/arcibyte/manim_manifolds/media/videos/latent_geometry/480p15/partial_movie_files/MetricTensorEvolution/4072820271_2574473371_3504822729.mp4'
+file 'file:/home/arcibyte/manim_manifolds/media/videos/latent_geometry/480p15/partial_movie_files/MetricTensorEvolution/4072820271_2709504856_853247680.mp4'
+file 'file:/home/arcibyte/manim_manifolds/media/videos/latent_geometry/480p15/partial_movie_files/MetricTensorEvolution/4072820271_1440743432_2794212020.mp4'
+file 'file:/home/arcibyte/manim_manifolds/media/videos/latent_geometry/480p15/partial_movie_files/MetricTensorEvolution/4072820271_3505198464_1646089881.mp4'
