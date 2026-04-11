@@ -1,0 +1,8 @@
+BG          = "#05050f"
+REAL_C      = "#4ade80"
+FAKE_C      = "#f87171"
+BOUNDARY_C  = "#60a5fa"
+GRAD_C      = "#f59e0b"
+MUTED       = "#a3a3c2"
+DIM         = "#3a3a6a"
+MANIFOLD_C  = "#818cf8"
