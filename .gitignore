@@ -1,2 +1,28 @@
+#python environment & caches
 __pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+
 media/
+
+#more media, maybe...
+*.mp4
+*.avi
+*.mkv
+*.mov
+*.png
+*.jpg
+*.jpeg
+*.webp
+
+# text concatenation /temporary logs
+concat.txt
+*.log
+
+# system & IDE files
+.DS_Store
+.idea/
+.vscode/

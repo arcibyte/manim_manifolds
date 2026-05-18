@@ -6,3 +6,6 @@ GRAD_C      = "#f59e0b"
 MUTED       = "#a3a3c2"
 DIM         = "#3a3a6a"
 MANIFOLD_C  = "#818cf8"
+
+REAL_PATH   = "#facc15"
+WRONG_PATH  = "#f87171"
